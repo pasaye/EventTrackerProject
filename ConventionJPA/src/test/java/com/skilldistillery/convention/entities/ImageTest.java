@@ -12,11 +12,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CategoryTest {
+class ImageTest {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Category category;
+	private Image image;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,7 +31,7 @@ class CategoryTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		category = em.find(Category.class, 1);
+		image = em.find(Image.class, 1);
 	}
 
 	@AfterEach
@@ -42,9 +42,8 @@ class CategoryTest {
 	
 	@Test
 	void mapping() {
-		assertNotNull(category);
-		assertEquals("Comic Con", category.getName());
-		
+		assertNotNull(image);
+		assertEquals("My First Comic con", image.getName());
 	}
 
 }
