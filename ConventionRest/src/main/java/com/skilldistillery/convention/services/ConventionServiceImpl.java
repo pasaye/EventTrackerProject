@@ -31,20 +31,30 @@ public class ConventionServiceImpl implements ConventionService {
 
 	@Override
 	public Convention create(Convention convention) {
-		// TODO Auto-generated method stub
-		return null;
+		Convention conv = conRepo.saveAndFlush(convention);
+		return conv;
 	}
 
 	@Override
-	public Convention update(int conventionId, Convention convention) {
-		// TODO Auto-generated method stub
+	public Convention update(Convention convention, int conventionId) {
+		Convention updated = conRepo.findById(conventionId);
+		if(updated != null) {
+			updated.setName(convention.getName());
+			updated.setDescription(convention.getDescription());
+			updated.setDate(convention.getDate());
+			updated.setTime(convention.getTime());
+			updated.setCategory(convention.getCategory());
+			updated.setLocation(convention.getLocation());
+			updated.setImage(convention.getImage());
+			return conRepo.saveAndFlush(updated);
+		}
 		return null;
 	}
 
 	@Override
 	public boolean delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		conRepo.deleteById(id);
+		return !conRepo.existsById(id);
 	}
 
 }

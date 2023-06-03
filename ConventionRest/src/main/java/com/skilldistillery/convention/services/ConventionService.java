@@ -8,7 +8,7 @@ public interface ConventionService {
 	List<Convention> listAll();
 	Convention findById(int conventionId);
 	Convention create(Convention convention);
-	Convention update(int conventionId, Convention convention);
+	Convention update(Convention convention, int conventionId);
 	boolean delete(int id);
 
 }
