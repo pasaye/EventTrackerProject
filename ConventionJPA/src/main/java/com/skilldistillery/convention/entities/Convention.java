@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -27,9 +29,10 @@ public class Convention {
 	private LocalDate date;
 	private LocalTime time;
 	
-	@ManyToOne
-	@JoinColumn(name = "location_id")
-	private Location location;
+	@ManyToMany
+	@JoinTable(name = "convention_has_location", joinColumns = @JoinColumn(name = "convention_id"), inverseJoinColumns = @JoinColumn(name = "location_id"))
+	@JsonIgnore
+	private List<Location> locations;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
@@ -82,16 +85,15 @@ public class Convention {
 	public void setTime(LocalTime time) {
 		this.time = time;
 	}
-	
-
-	public Location getLocation() {
-		return location;
+		
+	public List<Location> getLocations() {
+		return locations;
 	}
 
-	public void setLocation(Location location) {
-		this.location = location;
+	public void setLocations(List<Location> locations) {
+		this.locations = locations;
 	}
-	
+
 	public Category getCategory() {
 		return category;
 	}
@@ -109,22 +111,22 @@ public class Convention {
 		this.images = images;
 	}
 	
-	public void addImage(Image image) {
-		if (images == null) { images = new ArrayList<>();}
-		if (!images.contains(image)) {
-			images.add(image);
-			if (image.getConvention() != null) {
-				image.getConvention().removeImage(image);
-			}
-			image.setConvention(this);
+	public void addLocation(Location locat) {
+		if (locations == null) {
+			locations = new ArrayList<>();
+		}
+		if (!locations.contains(locat)) {
+			locations.add(locat);
+			locat.addConvention(this);
 		}
 	}
 
-	public void removeImage(Image image) {
-		if (images != null && images.contains(image)) {
-			images.remove(image);
-			image.setConvention(null);
+	public void removeLocation(Location locat) {
+		if (locations != null && locations.contains(locat)) {
+			locations.remove(locat);
+			locat.setConventions(null);
 		}
+
 	}
 
 	@Override

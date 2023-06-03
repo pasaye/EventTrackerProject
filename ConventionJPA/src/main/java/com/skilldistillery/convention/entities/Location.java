@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,7 +24,7 @@ public class Location {
 	private String address;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "location")
+	@ManyToMany(mappedBy = "locations")
 	private List<Convention> conventions;
 	
 	public Location() {
@@ -72,21 +72,21 @@ public class Location {
 	}
 	
 	public void addConvention(Convention conv) {
-		if (conventions == null) { conventions = new ArrayList<>();}
+		if (conventions == null) {
+			conventions = new ArrayList<>();
+		}
 		if (!conventions.contains(conv)) {
 			conventions.add(conv);
-			if (conv.getLocation() != null) {
-				conv.getLocation().removeConvention(conv);
-			}
-			conv.setLocation(this);
+			conv.addLocation(this);
 		}
 	}
 
 	public void removeConvention(Convention conv) {
 		if (conventions != null && conventions.contains(conv)) {
 			conventions.remove(conv);
-			conv.setLocation(null);
+			conv.setLocations(null);
 		}
+
 	}
 
 	@Override

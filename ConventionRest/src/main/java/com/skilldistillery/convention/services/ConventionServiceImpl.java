@@ -44,7 +44,7 @@ public class ConventionServiceImpl implements ConventionService {
 			updated.setDate(convention.getDate());
 			updated.setTime(convention.getTime());
 			updated.setCategory(convention.getCategory());
-			updated.setLocation(convention.getLocation());
+			updated.setLocations(convention.getLocations());
 			updated.setImages(convention.getImages());
 			return conRepo.saveAndFlush(updated);
 		}

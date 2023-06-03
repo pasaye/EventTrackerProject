@@ -47,8 +47,9 @@ class LocationTest {
 	}
 	
 	@Test
-	void mapping_Convention() {
+	void mapping_Convention_manytomany() {
 		assertNotNull(location);
+		assertNotNull(location.getConventions());
 		assertTrue(location.getConventions().size() > 0);
 	}
 

@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.convention.entities.Convention;
 import com.skilldistillery.convention.entities.Location;
+import com.skilldistillery.convention.repositories.ConventionRepository;
 import com.skilldistillery.convention.repositories.LocationRepository;
 
 @Service
@@ -13,6 +15,9 @@ public class LocationServiceImpl implements LocationService {
 
 	@Autowired
 	private LocationRepository locatRepo;
+	
+	@Autowired 
+	private ConventionRepository convRepo;
 
 	@Override
 	public List<Location> listAllLocations() {
@@ -29,7 +34,12 @@ public class LocationServiceImpl implements LocationService {
 	}
 
 	@Override
-	public Location create(Location location) {
+	public Location create(int conventionId, Location location) {
+		Convention conv = convRepo.findById(conventionId);
+		if(locatRepo.existsById(conventionId)) {
+		
+		}
+		
 		return locatRepo.saveAndFlush(location);
 	}
 
@@ -49,6 +59,18 @@ public class LocationServiceImpl implements LocationService {
 	public boolean delete(int id) {
 		locatRepo.deleteById(id);
 		return !locatRepo.existsById(id);
+	}
+
+	@Override
+	public List<Location> findByStateLike(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Location> listByState() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

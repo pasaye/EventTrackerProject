@@ -7,7 +7,10 @@ import com.skilldistillery.convention.entities.Location;
 public interface LocationService {
 	List<Location> listAllLocations();
 	Location findById(int id);
-	Location create(Location location);
+	Location create(int conventionId, Location location);
 	Location update(Location location, int id);
 	boolean delete(int id);
+	
+	List<Location>findByStateLike(String keyword);
+	List<Location> listByState();
 }

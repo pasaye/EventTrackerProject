@@ -49,9 +49,10 @@ class ConventionTest {
 	}
 	
 	@Test
-	void mapping_location() {
+	void mapping_location_manytomany() {
 		assertNotNull(convention);
-		assertEquals("San Diego", convention.getLocation().getCity());
+		assertNotNull(convention.getLocations());
+		assertTrue(convention.getLocations().size() > 0);
 	}
 	
 	@Test

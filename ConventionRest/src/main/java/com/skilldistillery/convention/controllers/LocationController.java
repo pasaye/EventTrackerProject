@@ -39,9 +39,9 @@ public class LocationController {
 	}
 	
 	@PostMapping("locations")
-	public Location createLocation(@RequestBody Location location, HttpServletResponse res) {
+	public Location createLocation(@RequestBody Location location, HttpServletResponse res, @PathVariable int id) {
 		try {
-			location = service.create(location);
+			location = service.create(id, location);
 			res.setStatus(201);
 		} catch (Exception e) {
 			e.printStackTrace();
