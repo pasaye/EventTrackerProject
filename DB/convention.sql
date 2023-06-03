@@ -120,6 +120,9 @@ COMMIT;
 START TRANSACTION;
 USE `conventiondb`;
 INSERT INTO `location` (`id`, `state`, `city`, `address`) VALUES (1, 'California', 'San Diego', '111 Harbor Dr, San Diego, CA 92101');
+INSERT INTO `location` (`id`, `state`, `city`, `address`) VALUES (2, 'Texas', 'San Antonio', '618 Northwest Loop 410 Suite 207, San Antonio, TX 78216');
+INSERT INTO `location` (`id`, `state`, `city`, `address`) VALUES (3, 'Texas', 'Dallas', '1501 Gaylord Trail, Grapevine, TX 76051');
+INSERT INTO `location` (`id`, `state`, `city`, `address`) VALUES (4, 'Texas', 'San Antonio', '900 E Market St, San Antonio, TX 78205');
 
 COMMIT;
 
@@ -130,6 +133,11 @@ COMMIT;
 START TRANSACTION;
 USE `conventiondb`;
 INSERT INTO `image` (`id`, `name`, `image_url`, `picture`) VALUES (1, 'My First Comic con', 'https://www.gaytravel4u.com/wp-content/uploads/2021/03/Comic-Con-San-Diego-3.jpg', NULL);
+INSERT INTO `image` (`id`, `name`, `image_url`, `picture`) VALUES (2, 'So many different anime', 'https://www.yumicon.com/uploads/b/0ecee6f3862b3dafa3c73de6c94bf8c86dba0d873b0273b7cfdeccdcb0025151/2022-01-26_14-26-06_1643228824.jpg?width=2400&optimize=medium', NULL);
+INSERT INTO `image` (`id`, `name`, `image_url`, `picture`) VALUES (3, 'Awesome Pc gaming', 'https://www.nme.com/wp-content/uploads/2022/04/quakecon-bethesda@2000x1270.jpg', NULL);
+INSERT INTO `image` (`id`, `name`, `image_url`, `picture`) VALUES (4, 'Some great One Piece cosplay', 'https://6amcity.brightspotcdn.com/dims4/default/e6b8965/2147483647/strip/true/crop/1080x608+0+101/resize/1000x563!/quality/90/?url=https%3A%2F%2Fk1-prod-sixam-city.s3.amazonaws.com%2Fbrightspot%2F38%2F5e%2F6b878d9f41aa911c27fd08f22417%2F321562981-539032514936848-8557295849734043227-n.jpg', NULL);
+INSERT INTO `image` (`id`, `name`, `image_url`, `picture`) VALUES (5, 'Riverwalk anime was fun!!', 'https://s.hdnux.com/photos/75/33/47/16103925/6/rawImage.jpg', NULL);
+INSERT INTO `image` (`id`, `name`, `image_url`, `picture`) VALUES (6, 'Totally worth the trip', 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/58133482-bbc4-4185-ade8-8ed5fc85e8d0/daac7wn-4d0f3bfe-8dcb-4370-89fa-c0f3b0737bd9.jpg/v1/fill/w_549,h_350,q_70,strp/kawacon_2016___resident_evil_group_by_valeriealtaira_daac7wn-350t.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjUzIiwicGF0aCI6IlwvZlwvNTgxMzM0ODItYmJjNC00MTg1LWFkZTgtOGVkNWZjODVlOGQwXC9kYWFjN3duLTRkMGYzYmZlLThkY2ItNDM3MC04OWZhLWMwZjNiMDczN2JkOS5qcGciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.7poKa-tQv7WcB7Wc5dRsQrdy8nnmG18IqTcmY6k5n7Y', NULL);
 
 COMMIT;
 
@@ -139,7 +147,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `conventiondb`;
-INSERT INTO `convention` (`id`, `name`, `description`, `date`, `time`, `category_id`, `location_id`, `image_id`) VALUES (1, 'San Diego Comic-con', 'nerd heave', '2023-07-19', '08:00:00', 1, 1, 1);
+INSERT INTO `convention` (`id`, `name`, `description`, `date`, `time`, `category_id`, `location_id`, `image_id`) VALUES (1, 'San Diego Comic-con', 'Nerd heaven, The biggest Comic con event in the country', '2023-07-19', '08:00:00', 1, 1, 1);
+INSERT INTO `convention` (`id`, `name`, `description`, `date`, `time`, `category_id`, `location_id`, `image_id`) VALUES (2, 'YumiCon', 'celebrate anime culture with your fellow anime community! You can expect to see SPECIAL GUESTS, vendors, artists, performances, panels, video game tournaments and so much more!', '2023-06-02', '09:30:00', 2, 2, 2);
+INSERT INTO `convention` (`id`, `name`, `description`, `date`, `time`, `category_id`, `location_id`, `image_id`) VALUES (3, 'QuakeCon', 'The iconic fan gathering welcomes back its dedicated community with a reimagined and upgraded BYOC (Bring-Your-Own-Computer) LAN party for four days of round-the-clock gaming, a host of fun activities, and meetups for old and new friends. ', '2023-08-10', '08:00:00', 3, 3, 3);
+INSERT INTO `convention` (`id`, `name`, `description`, `date`, `time`, `category_id`, `location_id`, `image_id`) VALUES (4, 'Kawacon', 'Kawacon is dedicated to bringing out the best of Otaku & Gaming culture in our great city of San Antonio by helping to support and grow our community.', '2023-02-25', '09:00:00', 2, 4, 6);
+INSERT INTO `convention` (`id`, `name`, `description`, `date`, `time`, `category_id`, `location_id`, `image_id`) VALUES (5, 'Riverwalk Anime', 'The Riverwalk Anime festival is a chance for anime fans to meet and greet some of their favorite anime stars, such as Sarah Weidenheft, Ryan Colt Levy, and Reagan Murdock.', '2023-04-15', '09:10:00', 2, 4, 5);
+INSERT INTO `convention` (`id`, `name`, `description`, `date`, `time`, `category_id`, `location_id`, `image_id`) VALUES (6, 'San Japan', 'San Japan is the Largest Anime & Gaming Convention in the South Texas Region.', '2023-09-01', '8:45:00', 2, 4, 4);
 
 COMMIT;
 
