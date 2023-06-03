@@ -1,11 +1,18 @@
 package com.skilldistillery.convention.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @Entity
 public class Location {
@@ -15,6 +22,10 @@ public class Location {
 	private String state;
 	private String city;
 	private String address;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "location")
+	private List<Convention> conventions;
 	
 	public Location() {
 		super();
@@ -50,6 +61,32 @@ public class Location {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public List<Convention> getConventions() {
+		return conventions;
+	}
+
+	public void setConventions(List<Convention> conventions) {
+		this.conventions = conventions;
+	}
+	
+	public void addConvention(Convention conv) {
+		if (conventions == null) { conventions = new ArrayList<>();}
+		if (!conventions.contains(conv)) {
+			conventions.add(conv);
+			if (conv.getLocation() != null) {
+				conv.getLocation().removeConvention(conv);
+			}
+			conv.setLocation(this);
+		}
+	}
+
+	public void removeConvention(Convention conv) {
+		if (conventions != null && conventions.contains(conv)) {
+			conventions.remove(conv);
+			conv.setLocation(null);
+		}
 	}
 
 	@Override

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Convention {
@@ -19,6 +21,18 @@ public class Convention {
 	private String description;
 	private LocalDate date;
 	private LocalTime time;
+	
+	@ManyToOne
+	@JoinColumn(name = "location_id")
+	private Location location;
+	
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	private Category category;
+	
+	@ManyToOne
+	@JoinColumn(name = "image_id")
+	private Image image;
 	
 	public Convention() {
 		super();
@@ -62,6 +76,31 @@ public class Convention {
 
 	public void setTime(LocalTime time) {
 		this.time = time;
+	}
+	
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	@Override
