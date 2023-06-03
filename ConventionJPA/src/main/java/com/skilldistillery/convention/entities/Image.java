@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,10 +27,11 @@ public class Image {
 	private String imageUrl;
 
 	private Byte[] picture;
+	
+	@ManyToOne
+	@JoinColumn(name = "convention_id")
+	private Convention convention;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "image")
-	private List<Convention> conventions;
 
 	public Image() {
 		super();
@@ -66,32 +69,12 @@ public class Image {
 		this.picture = picture;
 	}
 
-	public List<Convention> getConventions() {
-		return conventions;
+	public Convention getConvention() {
+		return convention;
 	}
 
-	public void setConventions(List<Convention> conventions) {
-		this.conventions = conventions;
-	}
-
-	public void addConvention(Convention conv) {
-		if (conventions == null) {
-			conventions = new ArrayList<>();
-		}
-		if (!conventions.contains(conv)) {
-			conventions.add(conv);
-			if (conv.getImage() != null) {
-				conv.getImage().removeConvention(conv);
-			}
-			conv.setImage(this);
-		}
-	}
-
-	public void removeConvention(Convention conv) {
-		if (conventions != null && conventions.contains(conv)) {
-			conventions.remove(conv);
-			conv.setImage(null);
-		}
+	public void setConvention(Convention convention) {
+		this.convention = convention;
 	}
 
 	@Override

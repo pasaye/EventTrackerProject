@@ -2,6 +2,8 @@ package com.skilldistillery.convention.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -10,6 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Convention {
@@ -30,9 +35,9 @@ public class Convention {
 	@JoinColumn(name = "category_id")
 	private Category category;
 	
-	@ManyToOne
-	@JoinColumn(name = "image_id")
-	private Image image;
+	@JsonIgnore
+	@OneToMany(mappedBy = "convention")
+	private List<Image> images;
 	
 	public Convention() {
 		super();
@@ -95,12 +100,31 @@ public class Convention {
 		this.category = category;
 	}
 
-	public Image getImage() {
-		return image;
+
+	public List<Image> getImages() {
+		return images;
 	}
 
-	public void setImage(Image image) {
-		this.image = image;
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+	
+	public void addImage(Image image) {
+		if (images == null) { images = new ArrayList<>();}
+		if (!images.contains(image)) {
+			images.add(image);
+			if (image.getConvention() != null) {
+				image.getConvention().removeImage(image);
+			}
+			image.setConvention(this);
+		}
+	}
+
+	public void removeImage(Image image) {
+		if (images != null && images.contains(image)) {
+			images.remove(image);
+			image.setConvention(null);
+		}
 	}
 
 	@Override
