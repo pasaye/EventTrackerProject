@@ -45,5 +45,11 @@ class LocationTest {
 		assertNotNull(location);
 		assertEquals("California", location.getState());
 	}
+	
+	@Test
+	void mapping_Convention() {
+		assertNotNull(location);
+		assertTrue(location.getConventions().size() > 0);
+	}
 
 }

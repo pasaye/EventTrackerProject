@@ -45,5 +45,11 @@ class ImageTest {
 		assertNotNull(image);
 		assertEquals("My First Comic con", image.getName());
 	}
+	
+	@Test
+	void mapping_Convention() {
+		assertNotNull(image);
+		assertTrue(image.getConventions().size() > 0);
+	}
 
 }

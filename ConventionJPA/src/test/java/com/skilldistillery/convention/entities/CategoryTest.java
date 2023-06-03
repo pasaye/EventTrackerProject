@@ -46,5 +46,11 @@ class CategoryTest {
 		assertEquals("Comic Con", category.getName());
 		
 	}
+	
+	@Test
+	void mapping_convention() {
+		assertNotNull(category);
+		assertTrue(category.getConventions().size() > 0);
+	}
 
 }

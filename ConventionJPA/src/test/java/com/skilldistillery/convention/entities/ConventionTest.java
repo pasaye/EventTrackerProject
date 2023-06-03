@@ -48,7 +48,24 @@ class ConventionTest {
 		assertEquals("San Diego Comic-con", convention.getName());
 	}
 	
+	@Test
+	void mapping_location() {
+		assertNotNull(convention);
+		assertEquals("San Diego", convention.getLocation().getCity());
+	}
 	
+	@Test
+	void mapping_image() {
+		assertNotNull(convention);
+		assertEquals("My First Comic con", convention.getImage().getName());
+	}
+	
+	@Test
+	void mapping_category() {
+		assertNotNull(convention);
+		assertEquals("Comic Con", convention.getCategory().getName());
+		
+	}
 	
 
 }
