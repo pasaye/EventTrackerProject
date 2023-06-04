@@ -37,10 +37,10 @@ public class LocationServiceImpl implements LocationService {
 	public Location create(int conventionId, Location location) {
 		Convention conv = convRepo.findById(conventionId);
 		if(locatRepo.existsById(conventionId)) {
-		
+			return locatRepo.saveAndFlush(location);
+			
 		}
-		
-		return locatRepo.saveAndFlush(location);
+		return null;
 	}
 
 	@Override
@@ -63,14 +63,8 @@ public class LocationServiceImpl implements LocationService {
 
 	@Override
 	public List<Location> findByStateLike(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Location> listByState() {
-		// TODO Auto-generated method stub
-		return null;
+		String key = "%" + keyword + "%";
+		return locatRepo.findByStateLike(key);
 	}
 
 }

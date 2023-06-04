@@ -12,5 +12,4 @@ public interface LocationService {
 	boolean delete(int id);
 	
 	List<Location>findByStateLike(String keyword);
-	List<Location> listByState();
 }

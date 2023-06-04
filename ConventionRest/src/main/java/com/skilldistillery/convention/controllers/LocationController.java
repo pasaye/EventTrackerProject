@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.convention.entities.Image;
 import com.skilldistillery.convention.entities.Location;
 import com.skilldistillery.convention.services.LocationService;
 
@@ -38,7 +39,17 @@ public class LocationController {
 		return l;
 	}
 	
-	@PostMapping("locations")
+	@GetMapping("locations/search/{keyword}")
+	public List<Location> kewordSearch(@PathVariable("keyword") String key, HttpServletResponse res ) {
+		List<Location> state = service.findByStateLike(key);
+		if(state == null) {
+			res.setStatus(404);
+		}
+		return state;
+	}
+	
+	
+	@PostMapping("locations/{id}/conventions")
 	public Location createLocation(@RequestBody Location location, HttpServletResponse res, @PathVariable int id) {
 		try {
 			location = service.create(id, location);
