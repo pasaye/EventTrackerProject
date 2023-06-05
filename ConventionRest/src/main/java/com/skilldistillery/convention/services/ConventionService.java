@@ -13,4 +13,6 @@ public interface ConventionService {
 
 	List<Convention> findByLocationsState(String states);
 	
+	
+	
 }

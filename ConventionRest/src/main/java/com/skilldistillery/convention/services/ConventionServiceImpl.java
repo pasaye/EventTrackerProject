@@ -9,7 +9,7 @@ import com.skilldistillery.convention.entities.Convention;
 import com.skilldistillery.convention.repositories.ConventionRepository;
 
 @Service
-public abstract class ConventionServiceImpl implements ConventionService {
+public  class ConventionServiceImpl implements ConventionService {
 
 	@Autowired
 	private ConventionRepository conRepo;
@@ -66,4 +66,7 @@ public abstract class ConventionServiceImpl implements ConventionService {
 		}
 		return null;
 	}
+
+	
+
 }
