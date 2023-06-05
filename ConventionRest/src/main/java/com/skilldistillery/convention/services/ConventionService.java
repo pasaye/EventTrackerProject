@@ -11,4 +11,6 @@ public interface ConventionService {
 	Convention update(Convention convention, int conventionId);
 	boolean delete(int id);
 
+	List<Convention> findByLocationsState(String states);
+	
 }

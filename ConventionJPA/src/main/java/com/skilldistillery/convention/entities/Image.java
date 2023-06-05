@@ -21,6 +21,7 @@ public class Image {
 	@Column(name = "image_url")
 	private String imageUrl;
 
+	@Column(length = 1000000)
 	private Byte[] picture;
 	
 	@ManyToOne

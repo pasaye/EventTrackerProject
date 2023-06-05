@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,11 @@ public class ConventionController {
 		}
 		return conv;
 	}
+	
+//	@GetMapping("conventions/{states}")
+//	public List<Convention> findByState(@PathVariable String states, HttpServletResponse res){
+//		return service.findByLocationsState(states);
+//	}
 
 	@PostMapping("conventions")
 	public Convention createConvention(@RequestBody Convention conv, HttpServletResponse res) {

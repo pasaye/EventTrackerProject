@@ -5,12 +5,15 @@
     
     <!-- Begin entities -->
 	
-	<class>com.skilldistillery.xtreme.entities.Category</class>
-	<class>com.skilldistillery.xtreme.entities.Convention</class>
-	<class>com.skilldistillery.xtreme.entities.Image</class>
-	<class>com.skilldistillery.xtreme.entities.Location</class>
+	<class>com.skilldistillery.convention.entities.Category</class>
+	<class>com.skilldistillery.convention.entities.Convention</class>
+	<class>com.skilldistillery.convention.entities.Image</class>
+	<class>com.skilldistillery.convention.entities.Location</class>
 	
-
+	
+	
+	
+	
 	
 	<!--End entities  -->
     <properties>

@@ -31,7 +31,6 @@ public class Convention {
 	
 	@ManyToMany
 	@JoinTable(name = "convention_has_location", joinColumns = @JoinColumn(name = "convention_id"), inverseJoinColumns = @JoinColumn(name = "location_id"))
-	@JsonIgnore
 	private List<Location> locations;
 	
 	@ManyToOne

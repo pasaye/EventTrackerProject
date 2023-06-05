@@ -56,8 +56,12 @@ public class LocationServiceImpl implements LocationService {
 	}
 
 	@Override
-	public boolean delete(int id) {
-		locatRepo.deleteById(id);
+	public boolean delete(int conventionId,int id) {
+		Convention conv = convRepo.findById(conventionId);
+		if(locatRepo.existsById(conventionId)) {
+			locatRepo.deleteById(id);
+			
+		}
 		return !locatRepo.existsById(id);
 	}
 
@@ -66,5 +70,7 @@ public class LocationServiceImpl implements LocationService {
 		String key = "%" + keyword + "%";
 		return locatRepo.findByStateLike(key);
 	}
+
+	
 
 }

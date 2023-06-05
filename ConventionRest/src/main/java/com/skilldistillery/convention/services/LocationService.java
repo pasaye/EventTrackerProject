@@ -9,7 +9,8 @@ public interface LocationService {
 	Location findById(int id);
 	Location create(int conventionId, Location location);
 	Location update(Location location, int id);
-	boolean delete(int id);
+	boolean delete(int conventionId,int id);
 	
 	List<Location>findByStateLike(String keyword);
+	
 }

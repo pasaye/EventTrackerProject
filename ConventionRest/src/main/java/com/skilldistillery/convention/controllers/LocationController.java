@@ -28,7 +28,9 @@ public class LocationController {
 	@GetMapping("locations")
 	public List<Location> findAll() {
 		return service.listAllLocations();
+		
 	}
+
 	
 	@GetMapping("locations/{id}")
 	public Location getLocation(@PathVariable int id, HttpServletResponse res) {
@@ -75,14 +77,15 @@ public class LocationController {
 		return location;
 	}
 
-	@DeleteMapping("locations/{id}")
-	public void delete(HttpServletResponse res, @PathVariable int id) {
-		if (id != 0) {
-			service.delete(id);
+	@DeleteMapping("locations/{id}/conventions/{cid}")
+	public void delete(HttpServletResponse res, @PathVariable("id") int imageId, @PathVariable("cid") int id) {
+		if(id != 0) {
+			service.delete(id, imageId);
 			res.setStatus(204);
+			
 		} else {
-			res.setStatus(404);
-		}
+			res.setStatus(404);		
+		}		
 	}
 	
 }

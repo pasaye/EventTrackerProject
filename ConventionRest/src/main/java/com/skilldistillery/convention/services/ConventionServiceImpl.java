@@ -9,10 +9,11 @@ import com.skilldistillery.convention.entities.Convention;
 import com.skilldistillery.convention.repositories.ConventionRepository;
 
 @Service
-public class ConventionServiceImpl implements ConventionService {
+public abstract class ConventionServiceImpl implements ConventionService {
 
 	@Autowired
 	private ConventionRepository conRepo;
+
 
 	@Override
 	public List<Convention> listAll() {
@@ -38,7 +39,7 @@ public class ConventionServiceImpl implements ConventionService {
 	@Override
 	public Convention update(Convention convention, int conventionId) {
 		Convention updated = conRepo.findById(conventionId);
-		if(updated != null) {
+		if (updated != null) {
 			updated.setName(convention.getName());
 			updated.setDescription(convention.getDescription());
 			updated.setDate(convention.getDate());
@@ -57,4 +58,12 @@ public class ConventionServiceImpl implements ConventionService {
 		return !conRepo.existsById(id);
 	}
 
+	@Override
+	public List<Convention> findByLocationsState(String states) {
+		List<Convention> locat = conRepo.findByLocationsState(states);
+		if (locat != null) {
+			return locat;
+		}
+		return null;
+	}
 }

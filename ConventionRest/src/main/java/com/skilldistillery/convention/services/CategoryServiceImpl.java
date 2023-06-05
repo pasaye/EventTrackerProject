@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.skilldistillery.convention.entities.Category;
 import com.skilldistillery.convention.repositories.CategoryRepository;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 	
