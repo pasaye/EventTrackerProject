@@ -5,7 +5,7 @@
 	- For this project user will be able to track their favorite conventions. If we did include a convention or a type of convention they are free to add to our tracker. The user will also be able to add images and location no matter which State its infor each of the different Convention. 
 
 ### DataBase
- 
+ ![ERD Diagram][ERD Convention]
 
 ### RestApi
 
