@@ -67,6 +67,12 @@ public  class ConventionServiceImpl implements ConventionService {
 		return null;
 	}
 
-	
-
+	@Override
+	public List<Convention> findByCategory_Id(int cateId) {
+		List<Convention> convention = conRepo.findByCategory_Id(cateId);
+		if(conRepo.existsById(cateId)) {
+			return convention;
+		}
+		return null;
+	}
 }

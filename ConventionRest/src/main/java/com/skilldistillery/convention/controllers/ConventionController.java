@@ -38,11 +38,16 @@ public class ConventionController {
 		}
 		return conv;
 	}
-	
-//	@GetMapping("conventions/{states}")
-//	public List<Convention> findByState(@PathVariable String states, HttpServletResponse res){
-//		return service.findByLocationsState(states);
-//	}
+
+	@GetMapping("conventions/{states}")
+	public List<Convention> findByState(@PathVariable String states, HttpServletResponse res) {
+		return service.findByLocationsState(states);
+	}
+
+	@GetMapping("categories/{id}/conventions")
+	public List<Convention> conventionByCategory(@PathVariable("id") int cateId, HttpServletResponse res) {
+			return service.findByCategory_Id(cateId);
+	}
 
 	@PostMapping("conventions")
 	public Convention createConvention(@RequestBody Convention conv, HttpServletResponse res) {

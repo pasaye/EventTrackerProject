@@ -9,5 +9,6 @@ import com.skilldistillery.convention.entities.Convention;
 public interface ConventionRepository extends JpaRepository<Convention, Integer> {
 	Convention findById(int id);
 	
+	List<Convention> findByCategory_Id(int cateId);
 	List<Convention> findByLocationsState(String states);
 }
