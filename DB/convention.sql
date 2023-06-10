@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `convention` (
   `description` TEXT NOT NULL,
   `date` DATE NULL,
   `time` TIME NULL,
-  `category_id` INT NULL,
+  `category_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_convention_category1_idx` (`category_id` ASC),
   CONSTRAINT `fk_convention_category1`
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `image` (
   `name` VARCHAR(200) NULL,
   `image_url` VARCHAR(2000) NULL,
   `picture` BIGINT NULL,
-  `convention_id` INT NULL,
+  `convention_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_image_convention1_idx` (`convention_id` ASC),
   CONSTRAINT `fk_image_convention1`

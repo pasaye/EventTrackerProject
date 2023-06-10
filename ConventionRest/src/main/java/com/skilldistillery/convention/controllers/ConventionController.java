@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.convention.entities.Convention;
+import com.skilldistillery.convention.entities.Location;
 import com.skilldistillery.convention.services.ConventionService;
 
 @RestController
@@ -59,8 +60,25 @@ public class ConventionController {
 			res.setStatus(400);
 			conv = null;
 		}
+		System.out.println("**************" + conv);
 		return conv;
 	}
+	
+	
+	@PostMapping("conventions/{id}/categories")
+	public Convention createLocation(@RequestBody Convention convention, HttpServletResponse res, @PathVariable int id) {
+		try {
+			convention = service.create(id, convention);
+			res.setStatus(201);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+			convention = null;
+		}
+		return convention;
+	}
+	
+	
 
 	@PutMapping("conventions/{id}")
 	public Convention updatedConvention(@PathVariable int id, @RequestBody Convention conv, HttpServletResponse res) {

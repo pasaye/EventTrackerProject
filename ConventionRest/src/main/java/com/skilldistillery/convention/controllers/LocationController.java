@@ -31,7 +31,6 @@ public class LocationController {
 		
 	}
 
-	
 	@GetMapping("locations/{id}")
 	public Location getLocation(@PathVariable int id, HttpServletResponse res) {
 		Location l = service.findById(id);
