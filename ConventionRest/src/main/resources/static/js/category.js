@@ -33,36 +33,48 @@ let getConventionForCategory = function(categoryId) {
 let displayConventionList = function(data) {
 	let body = document.getElementById('body');
 	body.textContent = '';
-		data.forEach(function(value) {
-			let tr = document.createElement('tr');
+	data.forEach(function(value) {
+		let tr = document.createElement('tr');
+		let td = document.createElement('td');
+		let exploreTD = document.createElement('td');
+		let btn = document.createElement('button')
+		td.textContent = `${value.name}`;
+		tr.appendChild(td)
+		td = document.createElement('td')
+		td = document.createElement('td');
+		td.textContent = `${value.description}`
+		tr.appendChild(td)
+		td = document.createElement('td');
+		td.textContent = `${value.date}`
+		tr.appendChild(td)
+		td = document.createElement('td');
+		td.textContent = `${value.time}`
+		tr.appendChild(td)
+		td = document.createElement('td');
+		value.locations.forEach(function(value) {
 			let td = document.createElement('td');
-			td.textContent = `${value.name}`;
-			tr.appendChild(td)
 			td = document.createElement('td');
-			td.textContent = `${value.description}`
-			tr.appendChild(td)
+			td.textContent = `${value.state}`
+			tr.appendChild(td);
 			td = document.createElement('td');
-			td.textContent = `${value.date}`
-			tr.appendChild(td)
+			td.textContent = `${value.city}`
+			tr.appendChild(td);
 			td = document.createElement('td');
-			td.textContent = `${value.time}`
-			tr.appendChild(td)
-			td = document.createElement('td');
-			value.locations.forEach(function(value) {
-				let td = document.createElement('td');
-				td = document.createElement('td');
-				td.textContent = `${value.state}`
-				tr.appendChild(td);
-				td = document.createElement('td');
-				td.textContent = `${value.city}`
-				tr.appendChild(td);
-				td = document.createElement('td');
-				td.textContent = `${value.address}`
-				tr.appendChild(td);
-			})
-			tr.appendChild(td)
-			body.appendChild(tr);
+			td.textContent = `${value.address}`
+			tr.appendChild(td);
 		})
+		btn.addEventListener('click', function(e) {
+			e.preventDefault();
+			let conventionId = value.id;
+			if (!isNaN(conventionId) && conventionId > 0) {
+					getconvention(conventionId);
+			}
+		})
+		btn.textContent = 'Explore';
+		exploreTD.appendChild(btn);
+		tr.appendChild(exploreTD)
+		body.appendChild(tr);
+	})
 }
 
 let categoryList = function() {
@@ -153,14 +165,14 @@ let editCategory = function(e) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				let data = JSON.parse(xhr.responseText)
-					displayCategoryList(data);
+				displayCategoryList(data);
 			} else {
 				console.error("PUT request failed.");
 				console.error(xhr.status + ': ' + xhr.responseText);
 			}
 		}
 	}
-let category = {
+	let category = {
 		name: document.getElementById('editInput').value
 	};
 
@@ -168,20 +180,69 @@ let category = {
 	xhr.send(userObjectJson);
 }
 
-let editForm = function(categoryId){
+let editForm = function(categoryId) {
 	let div = document.getElementById('editCon');
 	let form = document.createElement('form');
-	form.name='editCategory'
+	form.name = 'editCategory'
 	let input = document.createElement('input')
-	input.type ='text';
-	input.id ='editInput';
-	input.setAttribute('placeholder', 'Fix this Categories name')
+	input.type = 'text';
+	input.id = 'editInput';
+	input.setAttribute('placeholder', categoryId.name)
 	form.appendChild(input);
 	let btn = document.createElement('button');
 	btn.id = categoryId;
-	btn.name='updateCategory'
-	btn.textContent='Update'
+	btn.name = 'updateCategory'
+	btn.textContent = 'Update'
 	btn.addEventListener('click', editCategory);
 	form.appendChild(btn)
 	div.appendChild(form)
 }
+
+let getconvention = function(conventionID){
+		let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/conventions/' + conventionID, true);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let data = JSON.parse(xhr.responseText);
+				displayConvention(data)
+
+			} else {
+				console.error(xhr.status + ': ' + xhr.responseText);
+			}
+		}
+	}
+	xhr.send();
+	
+}
+
+let displayConvention = function(convention) {
+	let div = document.getElementById('convention');
+	let h1 = document.createElement('h1');
+	let block = document.createElement('blockquote');
+	let ul = document.createElement('ul');
+	let li = document.createElement('li');
+	h1.textContent = convention.name
+	block.textContent = convention.description
+	li.textContent = 'Join us on: '+ convention.date
+	ul.appendChild(li);
+	li = document.createElement('li');
+	li.textContent = 'Starting at: ' +convention.time
+	ul.appendChild(li)
+	
+	li = document.createElement('li');
+	li.textContent = 'Located at: ' +convention.locations.forEach(function(value) {
+		ul = document.createElement('ul');
+		li = document.createElement('li');
+		li.textContent = `${value.state}`+ ' ' + `${value.city}` + ' ' + `${value.address}`
+		ul.appendChild(li)
+	});
+	
+	ul.appendChild(li)
+	div.appendChild(h1)
+	div.appendChild(block)
+	div.appendChild(ul)
+	
+	
+}
+
