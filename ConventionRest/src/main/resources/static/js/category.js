@@ -67,7 +67,8 @@ let displayConventionList = function(data) {
 			e.preventDefault();
 			let conventionId = value.id;
 			if (!isNaN(conventionId) && conventionId > 0) {
-					getconvention(conventionId);
+				getconvention(conventionId);
+				getImage(conventionId)
 			}
 		})
 		btn.textContent = 'Explore';
@@ -198,8 +199,8 @@ let editForm = function(categoryId) {
 	div.appendChild(form)
 }
 
-let getconvention = function(conventionID){
-		let xhr = new XMLHttpRequest();
+let getconvention = function(conventionID) {
+	let xhr = new XMLHttpRequest();
 	xhr.open('GET', 'api/conventions/' + conventionID, true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
@@ -213,36 +214,63 @@ let getconvention = function(conventionID){
 		}
 	}
 	xhr.send();
-	
+
 }
 
 let displayConvention = function(convention) {
 	let div = document.getElementById('convention');
+	div.textContent = '';
 	let h1 = document.createElement('h1');
 	let block = document.createElement('blockquote');
 	let ul = document.createElement('ul');
 	let li = document.createElement('li');
 	h1.textContent = convention.name
 	block.textContent = convention.description
-	li.textContent = 'Join us on: '+ convention.date
+	li.textContent = 'Join us on: ' + convention.date
 	ul.appendChild(li);
 	li = document.createElement('li');
-	li.textContent = 'Starting at: ' +convention.time
+	li.textContent = 'Starting at: ' + convention.time
 	ul.appendChild(li)
-	
+
 	li = document.createElement('li');
-	li.textContent = 'Located at: ' +convention.locations.forEach(function(value) {
+	li.textContent = 'Located at: ' + convention.locations.forEach(function(value) {
 		ul = document.createElement('ul');
 		li = document.createElement('li');
-		li.textContent = `${value.state}`+ ' ' + `${value.city}` + ' ' + `${value.address}`
+		li.textContent = `${value.state}` + ' ' + `${value.city}` + ' ' + `${value.address}`
 		ul.appendChild(li)
 	});
-	
+
 	ul.appendChild(li)
 	div.appendChild(h1)
 	div.appendChild(block)
 	div.appendChild(ul)
+}
+
+let getImage = function(conventionId) {
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/images/'+ conventionId +'/conventions"/', true);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let data = JSON.parse(xhr.responseText);
+				displayImages(data)
+			} else {
+				console.error(xhr.status + ': ' + xhr.responseText);
+			}
+		}
+	}
+	xhr.send();
+}
+
+let displayImages = function(images) {
+	let div = document.getElementById('convention')
 	
+	images.forEach(function(value) {
+		let img = document.createElement('img');
+		img.setAttribute('src', value.imageUrl)
+		img.textContent = `${value.name}`
+		div.appendChild(img);
+	});
 	
 }
 
