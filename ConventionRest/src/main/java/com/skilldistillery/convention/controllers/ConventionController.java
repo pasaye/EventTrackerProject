@@ -50,19 +50,19 @@ public class ConventionController {
 			return service.findByCategory_Id(cateId);
 	}
 
-	@PostMapping("conventions")
-	public Convention createConvention(@RequestBody Convention conv, HttpServletResponse res) {
-		try {
-			conv = service.create(conv);
-			res.setStatus(201);
-		} catch (Exception e) {
-			e.printStackTrace();
-			res.setStatus(400);
-			conv = null;
-		}
-		System.out.println("**************" + conv);
-		return conv;
-	}
+//	@PostMapping("conventions")
+//	public Convention createConvention(@RequestBody Convention conv, HttpServletResponse res) {
+//		try {
+//			conv = service.create(conv);
+//			res.setStatus(201);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			res.setStatus(400);
+//			conv = null;
+//		}
+//		System.out.println("**************" + conv);
+//		return conv;
+//	}
 	
 	
 	@PostMapping("conventions/{id}/categories")
@@ -78,7 +78,18 @@ public class ConventionController {
 		return convention;
 	}
 	
-	
+	@PutMapping("conventions/{id}/{cateid}/categories")
+	public Convention update(@PathVariable("id") int conventionId, @PathVariable("cateid") int categoryId ,@RequestBody Convention conv, HttpServletResponse res) {
+		try {
+			conv = service.put(categoryId, conv, conventionId);
+			res.setStatus(201);
+		}catch(Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+			conv=null;
+		}
+		return conv;
+	}
 
 	@PutMapping("conventions/{id}")
 	public Convention updatedConvention(@PathVariable int id, @RequestBody Convention conv, HttpServletResponse res) {

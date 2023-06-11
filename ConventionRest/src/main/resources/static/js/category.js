@@ -32,6 +32,7 @@ let displayConventionList = function(data) {
 	let body = document.getElementById('body');
 	body.textContent = '';
 	let btn = document.createElement('button')
+
 	data.forEach(function(value) {
 		let tr = document.createElement('tr');
 		let td = document.createElement('td');
@@ -75,14 +76,12 @@ let displayConventionList = function(data) {
 		tr.appendChild(exploreTD)
 		body.appendChild(tr);
 	})
+
 	btn.addEventListener('click', function(e) {
 		let catID;
-		console.log(catID)
 		for (const element of data) {
 			catID = element.category.id
-			console.log(catID)
 		}
-
 		addForm(catID);
 	})
 	btn.textContent = 'Add Conventions'
@@ -287,8 +286,10 @@ let displayConvention = function(convention) {
 	btn.addEventListener('click', function(e) {
 		e.preventDefault();
 		let conId = convention.id;
+		let cateId = convention.category.id
+		let cateName = convention.category.name
 		if (!isNaN(conId) && conId > 0) {
-			updateConForm(conId)
+			updateConForm(conId, cateId)
 		}
 
 	})
@@ -322,9 +323,10 @@ let displayImages = function(images) {
 		let img = document.createElement('img');
 		img.setAttribute('src', value.imageUrl)
 		img.textContent = `${value.name}`
+		img.setAttribute('width', '200px')
+		img.setAttribute('height', '200px')
 		div.appendChild(img);
 	});
-
 }
 
 let addConvention = function(convention, catID) {
@@ -338,7 +340,6 @@ let addConvention = function(convention, catID) {
 			if (xhr.status === 200 || xhr.status === 201) {
 				let data = JSON.parse(xhr.responseText)
 				displayConvention(data);
-
 			} else {
 				console.error("POST request failed.");
 				console.error(xhr.status + ': ' + xhr.responseText);
@@ -388,40 +389,43 @@ let addForm = function(catID) {
 	input.setAttribute('placeholder', 'hh:mm:ss')
 	form.appendChild(input)
 	let btn = document.createElement('button');
-	//btn.id =catID
 	btn.name = 'addCon'
 	btn.textContent = 'add'
 	btn.addEventListener('click', function(e) {
 		e.preventDefault()
 		let convention = document.addConvention;
-		console.log(convention)
 		addConvention(convention, catID);
 	})
 	form.appendChild(btn)
 	fieldset.appendChild(form);
 }
 
-let updateConvention = function(e) {
+let updateConvention = function(convention, conId, cateId) {
 	let xhr = new XMLHttpRequest();
-	xhr.open('PUT', 'api/conventions/' + e.target.id, true);
+
+	console.log("Name of Convention: " + convention.conventionUpdated.value);
+	console.log("Description: " + convention.description.value);
+	console.log("Date: " + convention.date.value);
+	console.log("Time: " + convention.time.value);
+	
+	xhr.open('PUT', 'api/conventions/' + conId + '/' + cateId + '/categories', true);
 	xhr.setRequestHeader("Content-type", "application/json");
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
+			if (xhr.status === 200 || xhr.status === 201) {
 				let data = JSON.parse(xhr.responseText)
-				displayConventionList(data);
+				displayConvention(data);
 			} else {
 				console.error("PUT request failed.");
 				console.error(xhr.status + ': ' + xhr.responseText);
 			}
 		}
 	}
-	let convention = {
-		name: document.getElementById('convention').value,
-		description: document.getElementById('description').value,
-		date: document.getElementById('date').value,
-		time: document.getElementById('time').value
-
+	convention = {
+		name: document.update.conventionUpdated.value,
+		description: document.update.description.value,
+		date: document.update.date.value,
+		time: document.update.time.value
 	};
 
 	let userObjectJson = JSON.stringify(convention);
@@ -429,7 +433,7 @@ let updateConvention = function(e) {
 
 }
 
-let updateConForm = function(conId) {
+let updateConForm = function(conId, cateId) {
 	let div = document.getElementById('convention');
 	let fieldset = document.createElement('fieldset');
 	div.appendChild(fieldset);
@@ -437,34 +441,37 @@ let updateConForm = function(conId) {
 	legend.textContent = 'Update this convention';
 	fieldset.appendChild(legend)
 	let form = document.createElement('form');
-	form.name = 'updateConvention'
+	form.name = 'update'
 	let input = document.createElement('input');
 	input.type = 'text'
-	input.id = 'convention'
+	input.name = 'conventionUpdated'
 	input.setAttribute('placeholder', 'Name of Convention')
-	input.setAttribute('requried', '');
+	input.setAttribute('required', '');
 	form.appendChild(input)
 	input = document.createElement('input');
 	input.type = 'text'
-	input.id = 'description'
+	input.name = 'description'
 	input.setAttribute('placeholder', 'describe Convention')
-	input.setAttribute('requried', '');
+	input.setAttribute('required', '');
 	form.appendChild(input)
 	input = document.createElement('input');
 	input.type = 'text'
-	input.id = 'date'
+	input.name = 'date'
 	input.setAttribute('placeholder', 'YYYY-MM-DD')
 	form.appendChild(input)
 	input = document.createElement('input');
 	input.type = 'text'
-	input.id = 'time'
+	input.name = 'time'
 	input.setAttribute('placeholder', 'hh:mm:ss')
 	form.appendChild(input)
 	let btn = document.createElement('button');
-	btn.Id = conId;
 	btn.name = 'updateCon'
 	btn.textContent = 'update'
-	btn.addEventListener('click', updateConvention);
+	btn.addEventListener('click', function(e) {
+		e.preventDefault()
+		let updatedCon = document.update;
+		updateConvention(updatedCon, conId, cateId)
+	});
 	form.appendChild(btn)
 	fieldset.appendChild(form);
 }

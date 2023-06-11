@@ -49,9 +49,6 @@ public  class ConventionServiceImpl implements ConventionService {
 			updated.setDescription(convention.getDescription());
 			updated.setDate(convention.getDate());
 			updated.setTime(convention.getTime());
-			updated.setCategory(convention.getCategory());
-			updated.setLocations(convention.getLocations());
-			updated.setImages(convention.getImages());
 			return conRepo.saveAndFlush(updated);
 		}
 		return null;
@@ -87,6 +84,23 @@ public  class ConventionServiceImpl implements ConventionService {
 		convention.setCategory(cate);
 		if(conRepo.existsById(categoryId)) {
 			return conRepo.saveAndFlush(convention);	
+		}
+		return null;
+	}
+
+	@Override
+	public Convention put(int categoryId, Convention convention, int conventionId) {
+		Category cate = cateRepo.findById(categoryId);
+		convention.setCategory(cate);
+		if(conRepo.existsById(categoryId)) {
+			Convention updated = conRepo.findById(conventionId);
+		if (updated != null) {
+			updated.setName(convention.getName());
+			updated.setDescription(convention.getDescription());
+			updated.setDate(convention.getDate());
+			updated.setTime(convention.getTime());
+			return conRepo.saveAndFlush(updated);
+		}
 		}
 		return null;
 	}

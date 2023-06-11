@@ -11,6 +11,7 @@ public interface ConventionService {
 	Convention create(Convention convention);
 	Convention update(Convention convention, int conventionId);
 	Convention create(int categoryId, Convention convention);
+	Convention put(int categoryId, Convention convention, int conventionId);
 	boolean delete(int id);
 	List<Convention> findByCategory_Id(int cateId);
 	List<Convention> findByLocationsState(String states);
