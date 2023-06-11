@@ -242,8 +242,6 @@ let displayConvention = function(convention) {
 	li = document.createElement('li');
 	li.textContent = 'Starting at: ' + convention.time
 	ul.appendChild(li)
-
-
 	btn.addEventListener('click', function(e) {
 		e.preventDefault();
 		let conId = convention.id;
@@ -456,14 +454,11 @@ let getLocationForConvention = function(conventionId){
 	xhr.send();
 }
 	
-
-
-let displayLocation = function(locationArray){
-	console.log(locationArray)
+let displayLocation = function(location){
 	let div = document.getElementById('location')
-	div.textContent = '';
+	div.textContent = '';	
 	let ul = document.createElement('ul');
-	locationArray.forEach(function(value) {
+	location.forEach(function(value) {
 		let li = document.createElement('li');
 		li.textContent = `${value.address}` + ',' + `${value.city}`	+ ',' + `${value.state}`;
 		ul.appendChild(li);
@@ -471,7 +466,9 @@ let displayLocation = function(locationArray){
 	});
 }
 
-
+let displaySingleLocation = function(data) {
+	
+}
 
 let addLocation = function(location, conventionId) {
 	let xhr = new XMLHttpRequest();
@@ -480,10 +477,9 @@ let addLocation = function(location, conventionId) {
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200 || xhr.status === 201) {
-			//	let data = JSON.parse(xhr.responseText)
-			//	console.log(data);
-			//	displayConvention(data);
-			//	displayConventionList(data);
+				let data = JSON.parse(xhr.responseText)
+				console.log(data)
+				displaySingleLocation(data)
 			} else {
 				console.error("POST request failed.");
 				console.error(xhr.status + ': ' + xhr.responseText);
