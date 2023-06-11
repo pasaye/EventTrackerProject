@@ -152,7 +152,7 @@ let addCategory = function(category) {
 	xhr.setRequestHeader("Content-type", "application/json");
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
+			if (xhr.status === 200 || xhr.status === 201) {
 				let data = JSON.parse(xhr.responseText)
 				displayCategoryList(data);
 			} else {
@@ -224,7 +224,6 @@ let getconvention = function(conventionID) {
 		}
 	}
 	xhr.send();
-
 }
 
 let displayConvention = function(convention) {
@@ -438,8 +437,8 @@ let updateConForm = function(conId, cateId) {
 }
 
 
-let getLocationForConvention = function(conventionId){
-		let xhr = new XMLHttpRequest();
+let getLocationForConvention = function(conventionId) {
+	let xhr = new XMLHttpRequest();
 	xhr.open('GET', 'api/conventions/' + conventionId + '/locations', true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
@@ -453,21 +452,25 @@ let getLocationForConvention = function(conventionId){
 	}
 	xhr.send();
 }
-	
-let displayLocation = function(location){
+
+let displayLocation = function(location) {
 	let div = document.getElementById('location')
-	div.textContent = '';	
+	div.textContent = '';
 	let ul = document.createElement('ul');
-	location.forEach(function(value) {
-		let li = document.createElement('li');
-		li.textContent = `${value.address}` + ',' + `${value.city}`	+ ',' + `${value.state}`;
-		ul.appendChild(li);
+	if (Array.isArray(location)) {
+		location.forEach(function(value) {
+			let li = document.createElement('li');
+			li.textContent = `${value.address}` + ',' + `${value.city}` + ',' + `${value.state}`;
+			ul.appendChild(li);
+		});
 		div.appendChild(ul);
-	});
+	} 
 }
 
-let displaySingleLocation = function(data) {
-	
+let displaySinlgeLocation = function(location) {
+	let arr = [];
+	arr.push(location)
+	displayLocation(arr);
 }
 
 let addLocation = function(location, conventionId) {
@@ -478,8 +481,12 @@ let addLocation = function(location, conventionId) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200 || xhr.status === 201) {
 				let data = JSON.parse(xhr.responseText)
-				console.log(data)
-				displaySingleLocation(data)
+				if (Array.isArray(data)) {
+					displayLocation(data)
+
+				} else {
+					displaySinlgeLocation(data);
+				}
 			} else {
 				console.error("POST request failed.");
 				console.error(xhr.status + ': ' + xhr.responseText);
