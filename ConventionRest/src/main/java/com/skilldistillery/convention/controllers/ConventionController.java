@@ -90,19 +90,19 @@ public class ConventionController {
 		}
 		return conv;
 	}
-
-	@PutMapping("conventions/{id}")
-	public Convention updatedConvention(@PathVariable int id, @RequestBody Convention conv, HttpServletResponse res) {
-		try {
-			conv = service.update(conv, id);
-			res.setStatus(201);
-		} catch (Exception e) {
-			e.printStackTrace();
-			res.setStatus(400);
-			conv = null;
-		}
-		return conv;
-	}
+//
+//	@PutMapping("conventions/{id}")
+//	public Convention updatedConvention(@PathVariable int id, @RequestBody Convention conv, HttpServletResponse res) {
+//		try {
+//			conv = service.update(conv, id);
+//			res.setStatus(201);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			res.setStatus(400);
+//			conv = null;
+//		}
+//		return conv;
+//	}
 
 	@DeleteMapping("conventions/{id}")
 	public void delete(HttpServletResponse res, @PathVariable int id) {

@@ -10,4 +10,5 @@ public interface LocationRepository extends JpaRepository<Location, Integer> {
 		Location findById(int id);
 		
 		List<Location>findByStateLike(String keyword);
+		List<Location>findByConventions_id(int convId);
 }

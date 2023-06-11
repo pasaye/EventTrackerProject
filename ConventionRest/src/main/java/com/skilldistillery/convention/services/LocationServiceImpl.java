@@ -71,6 +71,15 @@ public class LocationServiceImpl implements LocationService {
 		return locatRepo.findByStateLike(key);
 	}
 
+	@Override
+	public List<Location> findByConventions_id(int convId) {
+		List<Location> list = locatRepo.findByConventions_id(convId);
+		if(locatRepo.existsById(convId)) {
+			return list;
+		}
+		return null;
+	}
+
 	
 
 }

@@ -31,7 +31,7 @@ let getConventionForCategory = function(categoryId) {
 let displayConventionList = function(data) {
 	let body = document.getElementById('body');
 	body.textContent = '';
-	let btn = document.createElement('button')
+	let abtn = document.createElement('button')
 
 	data.forEach(function(value) {
 		let tr = document.createElement('tr');
@@ -69,6 +69,7 @@ let displayConventionList = function(data) {
 			if (!isNaN(conventionId) && conventionId > 0) {
 				getconvention(conventionId);
 				getImage(conventionId)
+				getLocationForConvention(conventionId);
 			}
 		})
 		btn.textContent = 'Explore';
@@ -77,15 +78,15 @@ let displayConventionList = function(data) {
 		body.appendChild(tr);
 	})
 
-	btn.addEventListener('click', function(e) {
+	abtn.addEventListener('click', function(e) {
 		let catID;
 		for (const element of data) {
 			catID = element.category.id
 		}
 		addForm(catID);
 	})
-	btn.textContent = 'Add Conventions'
-	body.appendChild(btn);
+	abtn.textContent = 'Add Conventions'
+	body.appendChild(abtn);
 }
 
 let categoryList = function() {
@@ -241,64 +242,33 @@ let displayConvention = function(convention) {
 	li = document.createElement('li');
 	li.textContent = 'Starting at: ' + convention.time
 	ul.appendChild(li)
-	li = document.createElement('li');
-	if (convention.locations !== null) {
-		li.textContent = 'Located at: ' + convention.locations.forEach(function(value) {
-			let newul = document.createElement('ul');
-			li = document.createElement('li');
-			li.textContent = `${value.state}` + ' ' + `${value.city}` + ' ' + `${value.address}`
-			let btn = document.createElement('button');
-			btn.addEventListener('click', function(e) {
-				e.preventDefault()
-				let locationId = value.id;
-				if (!isNaN(locationId) && locationId > 0) {
-					updateLocationForm(locationId);
-				}
 
-			})
-			btn.textContent = 'Edit Location'
-			li.appendChild(btn);
-			btn = document.createElement('button');
-			btn.addEventListener('click', function(e) {
-				e.preventDefault();
-				let locationId = value.id;
-				if (!isNaN(locationId) && locationId > 0) {
-				}
 
-			})
-			btn.textContent = 'Delete Location'
-			li.appendChild(btn);
-			btn = document.createElement('button');
-			btn.addEventListener('click', function(e) {
-				e.preventDefault();
-				let conventionId = convention.id
-				if (!isNaN(conventionId) && conventionId > 0) {
-				} addLocationForm(conventionId)
-
-			})
-			btn.textContent = 'Add location'
-			li.appendChild(btn);
-			ul.appendChild(li)
-			div.appendChild(newul)
-
-		});
-	}
 	btn.addEventListener('click', function(e) {
 		e.preventDefault();
 		let conId = convention.id;
 		let cateId = convention.category.id
-		let cateName = convention.category.name
 		if (!isNaN(conId) && conId > 0) {
 			updateConForm(conId, cateId)
 		}
-
 	})
 	btn.textContent = 'Update this Convention'
+
+	let locatebtn = document.createElement('button');
+	locatebtn.addEventListener('click', function(e) {
+		e.preventDefault();
+		let conventionId = convention.id
+		if (!isNaN(conventionId) && conventionId > 0) {
+		} addLocationForm(conventionId)
+	})
+	locatebtn.textContent = 'Add location'
+
 	ul.appendChild(li);
 	div.appendChild(h1);
 	div.appendChild(block);
 	div.appendChild(ul);
 	div.appendChild(btn);
+	div.appendChild(locatebtn);
 }
 
 let getImage = function(conventionId) {
@@ -318,7 +288,8 @@ let getImage = function(conventionId) {
 }
 
 let displayImages = function(images) {
-	let div = document.getElementById('convention')
+	let div = document.getElementById('image')
+	div.textContent = '';
 	images.forEach(function(value) {
 		let img = document.createElement('img');
 		img.setAttribute('src', value.imageUrl)
@@ -330,8 +301,6 @@ let displayImages = function(images) {
 }
 
 let addConvention = function(convention, catID) {
-	console.log(catID)
-	console.log(convention)
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', 'api/conventions/' + catID + '/categories', true);
 	xhr.setRequestHeader("Content-type", "application/json");
@@ -403,11 +372,6 @@ let addForm = function(catID) {
 let updateConvention = function(convention, conId, cateId) {
 	let xhr = new XMLHttpRequest();
 
-	console.log("Name of Convention: " + convention.conventionUpdated.value);
-	console.log("Description: " + convention.description.value);
-	console.log("Date: " + convention.date.value);
-	console.log("Time: " + convention.time.value);
-	
 	xhr.open('PUT', 'api/conventions/' + conId + '/' + cateId + '/categories', true);
 	xhr.setRequestHeader("Content-type", "application/json");
 	xhr.onreadystatechange = function() {
@@ -430,7 +394,6 @@ let updateConvention = function(convention, conId, cateId) {
 
 	let userObjectJson = JSON.stringify(convention);
 	xhr.send(userObjectJson);
-
 }
 
 let updateConForm = function(conId, cateId) {
@@ -477,27 +440,61 @@ let updateConForm = function(conId, cateId) {
 }
 
 
-let addLocation = function(conventionId) {
+let getLocationForConvention = function(conventionId){
+		let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/conventions/' + conventionId + '/locations', true);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let data = JSON.parse(xhr.responseText);
+				displayLocation(data)
+			} else {
+				console.error(xhr.status + ': ' + xhr.responseText);
+			}
+		}
+	}
+	xhr.send();
+}
+	
+
+
+let displayLocation = function(locationArray){
+	console.log(locationArray)
+	let div = document.getElementById('location')
+	div.textContent = '';
+	let ul = document.createElement('ul');
+	locationArray.forEach(function(value) {
+		let li = document.createElement('li');
+		li.textContent = `${value.address}` + ',' + `${value.city}`	+ ',' + `${value.state}`;
+		ul.appendChild(li);
+		div.appendChild(ul);
+	});
+}
+
+
+
+let addLocation = function(location, conventionId) {
 	let xhr = new XMLHttpRequest();
-	xhr.open('POST', 'locations/' + conventionId + '/conventions"', true);
+	xhr.open('POST', 'api/locations/' + conventionId + '/conventions', true);
 	xhr.setRequestHeader("Content-type", "application/json");
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200 || xhr.status === 201) {
-				let data = JSON.parse(xhr.responseText)
-				displayConvention(data);
+			//	let data = JSON.parse(xhr.responseText)
+			//	console.log(data);
+			//	displayConvention(data);
+			//	displayConventionList(data);
 			} else {
 				console.error("POST request failed.");
 				console.error(xhr.status + ': ' + xhr.responseText);
 			}
 		}
 	}
-	let location = {
-		state: document.getElementById('state').value,
-		city: document.getElementById('city').value,
-		address: document.getElementById('address').value,
+	location = {
+		state: document.addLocation.state.value,
+		city: document.addLocation.city.value,
+		address: document.addLocation.address.value
 	};
-
 	let userObjectJson = JSON.stringify(location);
 	xhr.send(userObjectJson);
 }
@@ -508,33 +505,34 @@ let addLocationForm = function(conventionId) {
 	form.name = 'addLocation'
 	let input = document.createElement('input')
 	input.type = 'text';
-	input.id = 'state';
+	input.name = 'state';
 	input.setAttribute('placeholder', 'add state')
 	input.setAttribute('required', '');
 	form.appendChild(input);
 
 	input = document.createElement('input')
 	input.type = 'text';
-	input.id = 'city';
+	input.name = 'city';
 	input.setAttribute('placeholder', 'add city')
 	input.setAttribute('required', '');
 	form.appendChild(input);
 
 	input = document.createElement('input')
 	input.type = 'text';
-	input.id = 'address';
+	input.name = 'address';
 	input.setAttribute('placeholder', 'add address')
 	form.appendChild(input);
 
 	let btn = document.createElement('button');
-	btn.id = conventionId;
 	btn.name = 'addLocation'
-	btn.textContent = 'Update'
-	btn.addEventListener('click', addLocation);
+	btn.textContent = 'Add'
+	btn.addEventListener('click', function(e) {
+		e.preventDefault();
+		let location = document.addLocation;
+		addLocation(location, conventionId)
+	});
 	form.appendChild(btn)
 	div.appendChild(form)
-
-
 }
 
 

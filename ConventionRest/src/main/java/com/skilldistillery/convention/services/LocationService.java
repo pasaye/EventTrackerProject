@@ -12,5 +12,6 @@ public interface LocationService {
 	boolean delete(int conventionId,int id);
 	
 	List<Location>findByStateLike(String keyword);
+	List<Location>findByConventions_id(int convId);
 	
 }

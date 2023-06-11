@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.convention.entities.Convention;
 import com.skilldistillery.convention.entities.Image;
 import com.skilldistillery.convention.entities.Location;
 import com.skilldistillery.convention.services.LocationService;
@@ -49,6 +50,10 @@ public class LocationController {
 		return state;
 	}
 	
+	@GetMapping("conventions/{id}/locations")
+	public List<Location> locationByConvention(@PathVariable("id") int convId, HttpServletResponse res) {
+			return service.findByConventions_id(convId);
+	}
 	
 	@PostMapping("locations/{id}/conventions")
 	public Location createLocation(@RequestBody Location location, HttpServletResponse res, @PathVariable int id) {
