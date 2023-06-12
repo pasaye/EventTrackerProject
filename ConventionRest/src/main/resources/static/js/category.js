@@ -259,6 +259,15 @@ let displayConvention = function(convention) {
 		} addLocationForm(conventionId)
 	})
 	locatebtn.textContent = 'Add location'
+	console.log(convention.id)
+	let imagebtn = document.createElement('button');
+	imagebtn.addEventListener('click', function(e) {
+		e.preventDefault();
+			let conventionId =  convention.id
+		if (!isNaN(conventionId) && conventionId > 0) {
+		} imageForm(conventionId)
+	})
+	imagebtn.textContent = 'Add Image'
 
 	ul.appendChild(li);
 	div.appendChild(h1);
@@ -266,6 +275,7 @@ let displayConvention = function(convention) {
 	div.appendChild(ul);
 	div.appendChild(btn);
 	div.appendChild(locatebtn);
+	div.appendChild(imagebtn)
 }
 
 let getImage = function(conventionId) {
@@ -295,6 +305,59 @@ let displayImages = function(images) {
 		img.setAttribute('height', '200px')
 		div.appendChild(img);
 	});
+}
+
+
+let addImage = function(image, conventionId) {
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', 'api/images/' + conventionId + '/conventions', true);
+	xhr.setRequestHeader("Content-type", "application/json");
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200 || xhr.status === 201) {
+				let data = JSON.parse(xhr.responseText)
+				displayImages(data);
+			} else {
+				console.error("POST request failed.");
+				console.error(xhr.status + ': ' + xhr.responseText);
+			}
+		}
+	}
+	image = {
+		name: document.addImage.title.value,
+		imageUrl: document.addimage.link.value
+	};
+	let userObjectJson = JSON.stringify(image)
+	xhr.send(userObjectJson);
+}
+
+let imageForm = function(conventionId) {
+	console.log(conventionId)
+	let div = document.getElementById('image');
+	let form = document.createElement('form');
+	form.name = 'addImage'
+	let input = document.createElement('input')
+	input.type = 'text';
+	input.name = 'title'
+	input.setAttribute('placeholder', 'add name')
+	form.appendChild(input);
+	input = document.createElement('input')
+	input.type = 'text';
+	input.name = 'link'
+	input.setAttribute('placeholder', 'link URL')
+	form.appendChild(input);
+	let btn = document.createElement('button');
+	btn.name = 'add'
+	btn.textContent = 'Add'
+	btn.addEventListener('click', function(e){
+		e.preventDefault();
+		let image = document.addImage;
+		addImage(image, conventionId)
+	});
+	form.appendChild(btn)
+	div.appendChild(form)
+
+
 }
 
 let addConvention = function(convention, catID) {
@@ -464,7 +527,7 @@ let displayLocation = function(location) {
 			ul.appendChild(li);
 		});
 		div.appendChild(ul);
-	} 
+	}
 }
 
 let displaySinlgeLocation = function(location) {
@@ -539,7 +602,7 @@ let addLocationForm = function(conventionId) {
 }
 
 
-let updateLocation = function() {
+let updateLocation = function(e) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('PUT', 'api/locations/' + e.target.id, true);
 	xhr.setRequestHeader("Content-type", "application/json");
@@ -603,6 +666,5 @@ let updateLocationForm = function(locationId) {
 let deleteLocation = function() {
 
 }
-
 
 

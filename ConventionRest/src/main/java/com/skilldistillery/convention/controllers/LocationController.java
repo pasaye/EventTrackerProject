@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skilldistillery.convention.entities.Convention;
-import com.skilldistillery.convention.entities.Image;
 import com.skilldistillery.convention.entities.Location;
 import com.skilldistillery.convention.services.LocationService;
 
