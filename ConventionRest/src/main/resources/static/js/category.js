@@ -19,6 +19,7 @@ let getConventionForCategory = function(categoryId) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				let data = JSON.parse(xhr.responseText);
+				data.categoryId = categoryId;
 				displayConventionList(data)
 			} else {
 				console.error(xhr.status + ': ' + xhr.responseText);
@@ -79,11 +80,7 @@ let displayConventionList = function(data) {
 	})
 
 	abtn.addEventListener('click', function(e) {
-		let catID;
-		for (const element of data) {
-			catID = element.category.id
-		}
-		addForm(catID);
+		addForm(data.categoryId);
 	})
 	abtn.textContent = 'Add Conventions'
 	body.appendChild(abtn);
@@ -123,6 +120,7 @@ let displayCategoryList = function(categoryList) {
 		a.addEventListener('click', function(e) {
 			e.preventDefault();
 			let categoryId = value.id;
+			console.log(value)
 			if (!isNaN(categoryId) && categoryId > 0) {
 				getConventionForCategory(categoryId);
 			}
@@ -368,6 +366,7 @@ let addConvention = function(convention, catID) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200 || xhr.status === 201) {
 				let data = JSON.parse(xhr.responseText)
+				categoryList();
 				displayConvention(data);
 			} else {
 				console.error("POST request failed.");
