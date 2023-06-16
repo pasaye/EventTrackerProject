@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Convention } from '../models/convention';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConventionService {
-  private baseUrl = 'http://localhost:8082/';
-  private url = this.baseUrl + 'api/conventions';
+  url: string = environment.baseUrl;
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 

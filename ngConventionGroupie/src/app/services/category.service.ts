@@ -4,18 +4,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category } from '../models/category';
 import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
-  private baseUrl = 'http://localhost:8082/';
-  private url = this.baseUrl + 'api/categories';
+  url: string = environment.baseUrl + 'api/categories'
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   index(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.url + '?sorted=true').pipe(
+    return this.http.get<Category[]>(this.url).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Image } from '../models/image'
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImageService {
-  private baseUrl = 'http://localhost:8082/';
-  private url = this.baseUrl + 'api/images';
+
+  url: string = environment.baseUrl;
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
   index(): Observable<Image[]> {

@@ -11,6 +11,7 @@ import { ImageComponent } from './components/image/image.component';
 import { LocationComponent } from './components/location/location.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { FilterByIdPipe } from './pipes/filter-by-id.pipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     ImageComponent,
     LocationComponent,
     NavBarComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    FilterByIdPipe
   ],
   imports: [
     BrowserModule,

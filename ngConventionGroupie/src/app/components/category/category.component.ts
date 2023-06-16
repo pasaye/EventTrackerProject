@@ -1,3 +1,4 @@
+
 import { CategoryService } from './../../services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -35,7 +36,7 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  addTodo(newCategory: Category) {
+  addCategory(newCategory: Category) {
     this.categoryService.create(newCategory).subscribe({
       next: (category) => {
         this.reload();
@@ -48,16 +49,27 @@ export class CategoryComponent implements OnInit {
   }
 
 
-  updateTodo(id: number, category: Category) {
+  updateCategory(id: number, category: Category) {
     this.categoryService.update(id, category).subscribe({
       next: (category) => {
-
         this.reload();
         this.editCategory = null;
+        this.selected = null;
       },
       error: (error) => {
         console.error('Error' + error);
       },
     });
+  }
+
+  setEditCategory() {
+    this.editCategory = Object.assign({}, this.selected);
+  }
+
+  displayEditForm(category: Category): void {
+    this.selected = category;
+  }
+  displayTable() {
+    this.selected = null;
   }
 }

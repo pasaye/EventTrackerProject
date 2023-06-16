@@ -2,13 +2,13 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
-  private baseUrl = 'http://localhost:8082/';
-  private url = this.baseUrl + 'api/locations';
+  url: string = environment.baseUrl;
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
   index(): Observable<Location[]> {
