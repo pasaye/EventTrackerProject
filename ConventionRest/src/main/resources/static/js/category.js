@@ -257,7 +257,6 @@ let displayConvention = function(convention) {
 		} addLocationForm(conventionId)
 	})
 	locatebtn.textContent = 'Add location'
-	console.log(convention.id)
 	let imagebtn = document.createElement('button');
 	imagebtn.addEventListener('click', function(e) {
 		e.preventDefault();
@@ -506,6 +505,7 @@ let getLocationForConvention = function(conventionId) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
 				let data = JSON.parse(xhr.responseText);
+				data.conventiondId = conventionId
 				displayLocation(data)
 			} else {
 				console.error(xhr.status + ': ' + xhr.responseText);
@@ -519,14 +519,12 @@ let displayLocation = function(location) {
 	let div = document.getElementById('location')
 	div.textContent = '';
 	let ul = document.createElement('ul');
-	if (Array.isArray(location)) {
 		location.forEach(function(value) {
 			let li = document.createElement('li');
 			li.textContent = `${value.address}` + ',' + `${value.city}` + ',' + `${value.state}`;
 			ul.appendChild(li);
 		});
 		div.appendChild(ul);
-	}
 }
 
 let displaySinlgeLocation = function(location) {
@@ -543,12 +541,8 @@ let addLocation = function(location, conventionId) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200 || xhr.status === 201) {
 				let data = JSON.parse(xhr.responseText)
-				if (Array.isArray(data)) {
+				data.conventionId = conventionId;
 					displayLocation(data)
-
-				} else {
-					displaySinlgeLocation(data);
-				}
 			} else {
 				console.error("POST request failed.");
 				console.error(xhr.status + ': ' + xhr.responseText);

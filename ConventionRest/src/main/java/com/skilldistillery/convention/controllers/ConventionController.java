@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.convention.entities.Convention;
-import com.skilldistillery.convention.entities.Location;
 import com.skilldistillery.convention.services.ConventionService;
 
+@CrossOrigin({"*", "http://localhost/"})
 @RestController
 @RequestMapping("api")
 public class ConventionController {
@@ -90,19 +90,19 @@ public class ConventionController {
 		}
 		return conv;
 	}
-//
-//	@PutMapping("conventions/{id}")
-//	public Convention updatedConvention(@PathVariable int id, @RequestBody Convention conv, HttpServletResponse res) {
-//		try {
-//			conv = service.update(conv, id);
-//			res.setStatus(201);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			res.setStatus(400);
-//			conv = null;
-//		}
-//		return conv;
-//	}
+
+	@PutMapping("conventions/{id}")
+	public Convention updatedConvention(@PathVariable int id, @RequestBody Convention conv, HttpServletResponse res) {
+		try {
+			conv = service.update(conv, id);
+			res.setStatus(201);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+			conv = null;
+		}
+		return conv;
+	}
 
 	@DeleteMapping("conventions/{id}")
 	public void delete(HttpServletResponse res, @PathVariable int id) {
