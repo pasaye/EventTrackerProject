@@ -8,7 +8,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let c of categories">
-          <td>{{c.name}}</td>
+          <td [routerLink]="['/category/'+ c.id]">{{c.name}}</td>
           <td>
             <button (click)="displayEditForm(c)">Update Category</button>
           </td>

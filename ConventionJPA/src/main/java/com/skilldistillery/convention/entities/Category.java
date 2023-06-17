@@ -18,9 +18,9 @@ public class Category {
 	private int id;
 	private String name;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "category")
-	private List<Convention> conventions;
+//	@JsonIgnore
+//	@OneToMany(mappedBy = "category")
+//	private List<Convention> conventions;
 	
 	public Category() {
 		super();
@@ -43,31 +43,31 @@ public class Category {
 	}
 	
 
-	public List<Convention> getConventions() {
-		return conventions;
-	}
-
-	public void setConventions(List<Convention> conventions) {
-		this.conventions = conventions;
-	}
-	
-	public void addConvention(Convention conv) {
-		if (conventions == null) { conventions = new ArrayList<>();}
-		if (!conventions.contains(conv)) {
-			conventions.add(conv);
-			if (conv.getCategory() != null) {
-				conv.getCategory().removeConvention(conv);
-			}
-			conv.setCategory(this);
-		}
-	}
-
-	public void removeConvention(Convention conv) {
-		if (conventions != null && conventions.contains(conv)) {
-			conventions.remove(conv);
-			conv.setCategory(null);
-		}
-	}
+//	public List<Convention> getConventions() {
+//		return conventions;
+//	}
+//
+//	public void setConventions(List<Convention> conventions) {
+//		this.conventions = conventions;
+//	}
+//	
+//	public void addConvention(Convention conv) {
+//		if (conventions == null) { conventions = new ArrayList<>();}
+//		if (!conventions.contains(conv)) {
+//			conventions.add(conv);
+//			if (conv.getCategory() != null) {
+//				conv.getCategory().removeConvention(conv);
+//			}
+//			conv.setCategory(this);
+//		}
+//	}
+//
+//	public void removeConvention(Convention conv) {
+//		if (conventions != null && conventions.contains(conv)) {
+//			conventions.remove(conv);
+//			conv.setCategory(null);
+//		}
+//	}
 
 	@Override
 	public String toString() {

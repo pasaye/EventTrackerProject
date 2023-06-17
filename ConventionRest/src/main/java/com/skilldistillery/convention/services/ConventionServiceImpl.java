@@ -16,8 +16,8 @@ public  class ConventionServiceImpl implements ConventionService {
 	@Autowired
 	private ConventionRepository conRepo;
 	
-	@Autowired
-	private CategoryRepository cateRepo;
+//	@Autowired
+//	private CategoryRepository cateRepo;
 
 
 	@Override
@@ -69,39 +69,39 @@ public  class ConventionServiceImpl implements ConventionService {
 		return null;
 	}
 
-	@Override
-	public List<Convention> findByCategory_Id(int cateId) {
-		List<Convention> convention = conRepo.findByCategory_Id(cateId);
-		if(conRepo.existsById(cateId)) {
-			return convention;
-		}
-		return null;
-	}
+//	@Override
+//	public List<Convention> findByCategory_Id(int cateId) {
+//		List<Convention> convention = conRepo.findByCategory_Id(cateId);
+//		if(conRepo.existsById(cateId)) {
+//			return convention;
+//		}
+//		return null;
+//	}
 
-	@Override
-	public Convention create(int categoryId, Convention convention) {
-		Category cate = cateRepo.findById(categoryId);
-		convention.setCategory(cate);
-		if(conRepo.existsById(categoryId)) {
-			return conRepo.saveAndFlush(convention);	
-		}
-		return null;
-	}
+//	@Override
+//	public Convention create(int categoryId, Convention convention) {
+//		Category cate = cateRepo.findById(categoryId);
+//		convention.setCategory(cate);
+//		if(conRepo.existsById(categoryId)) {
+//			return conRepo.saveAndFlush(convention);	
+//		}
+//		return null;
+//	}
 
-	@Override
-	public Convention put(int categoryId, Convention convention, int conventionId) {
-		Category cate = cateRepo.findById(categoryId);
-		convention.setCategory(cate);
-		if(conRepo.existsById(categoryId)) {
-			Convention updated = conRepo.findById(conventionId);
-		if (updated != null) {
-			updated.setName(convention.getName());
-			updated.setDescription(convention.getDescription());
-			updated.setDate(convention.getDate());
-			updated.setTime(convention.getTime());
-			return conRepo.saveAndFlush(updated);
-		}
-		}
-		return null;
-	}
+//	@Override
+//	public Convention put(int categoryId, Convention convention, int conventionId) {
+//		Category cate = cateRepo.findById(categoryId);
+//		convention.setCategory(cate);
+//		if(conRepo.existsById(categoryId)) {
+//			Convention updated = conRepo.findById(conventionId);
+//		if (updated != null) {
+//			updated.setName(convention.getName());
+//			updated.setDescription(convention.getDescription());
+//			updated.setDate(convention.getDate());
+//			updated.setTime(convention.getTime());
+//			return conRepo.saveAndFlush(updated);
+//		}
+//		}
+//		return null;
+//	}
 }

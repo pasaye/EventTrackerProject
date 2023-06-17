@@ -1,1 +1,33 @@
-<p>convention works!</p>
+<div>
+  <table class="table table-striped-columns table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Info</th>
+        <th>Date</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let conv of conventions">
+        <td>{{conv.name}}</td>
+        <td>{{conv.description}}</td>
+        <td>{{conv.date}}</td>
+        <td>{{conv.time}}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div>
+  <input class="form-control" type="text" name="name" [(ngModel)]="newConvention.name"
+    placeholder="Add Your Convention" />
+  <input class="form-control" type="text" name="description" [(ngModel)]="newConvention.description"
+    placeholder="What's it about?" />
+  <input class="form-control" type="date" name="date" [(ngModel)]="newConvention.date" />
+  <input class="form-control" type="time" name="time" [(ngModel)]="newConvention.time" />
+  <div class="d-grid gap-2">
+    <input class="btn btn-primary" type="submit" name="submit" value="Add Convention"
+      (click)="addConvention(newConvention)" />
+  </div>
+</div>

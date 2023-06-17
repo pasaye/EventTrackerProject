@@ -7,9 +7,9 @@ import { ImageComponent } from './components/image/image.component';
 import { LocationComponent } from './components/location/location.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'category' },
-  { path: 'category', component: CategoryComponent },
-  { path: 'category/:categoryId', component: ConventionComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'convention' },
+  // { path: 'category', component: CategoryComponent },
+  // { path: 'category/:categoryId', component: ConventionComponent },
   { path: 'convention', component: ConventionComponent },
   { path: 'image', component: ImageComponent },
   { path: 'location', component: LocationComponent },

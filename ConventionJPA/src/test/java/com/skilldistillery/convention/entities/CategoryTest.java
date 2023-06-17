@@ -47,10 +47,10 @@ class CategoryTest {
 		
 	}
 	
-	@Test
-	void mapping_convention() {
-		assertNotNull(category);
-		assertTrue(category.getConventions().size() > 0);
-	}
+//	@Test
+//	void mapping_convention() {
+//		assertNotNull(category);
+//		assertTrue(category.getConventions().size() > 0);
+//	}
 
 }

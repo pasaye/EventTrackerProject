@@ -60,13 +60,13 @@ class ConventionTest {
 		assertNotNull(convention);
 		assertTrue(convention.getImages().size() > 0);
 	}
-	
-	@Test
-	void mapping_category() {
-		assertNotNull(convention);
-		assertEquals("Comic Con", convention.getCategory().getName());
-		
-	}
+//	
+//	@Test
+//	void mapping_category() {
+//		assertNotNull(convention);
+//		assertEquals("Comic Con", convention.getCategory().getName());
+//		
+//	}
 	
 
 }

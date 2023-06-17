@@ -33,9 +33,9 @@ public class Convention {
 	@JoinTable(name = "convention_has_location", joinColumns = @JoinColumn(name = "convention_id"), inverseJoinColumns = @JoinColumn(name = "location_id"))
 	private List<Location> locations;
 	
-	@ManyToOne
-	@JoinColumn(name = "category_id")
-	private Category category;
+//	@ManyToOne
+//	@JoinColumn(name = "category_id")
+//	private Category category;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "convention")
@@ -93,13 +93,13 @@ public class Convention {
 		this.locations = locations;
 	}
 
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
+//	public Category getCategory() {
+//		return category;
+//	}
+//
+//	public void setCategory(Category category) {
+//		this.category = category;
+//	}
 
 
 	public List<Image> getImages() {

@@ -9,25 +9,38 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root'
 })
 export class ConventionService {
-  url: string = environment.baseUrl;
+
+  url: string = environment.baseUrl + 'api/conventions'
+  // url2: string = environment.baseUrl + 'api/categories/'
+  // url3: string = environment.baseUrl + 'api/categories'
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   index(): Observable<Convention[]> {
-    return this.http.get<Convention[]>(this.url + '?sorted=true').pipe(
+    return this.http.get<Convention[]>(this.url).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
-          () => new Error('TodoService.index(): error retrieving todo: ' + err)
+          () => new Error('index: ' + err)
         );
       })
     );
   }
+  // indexForCategory(categoryId: number): Observable<Convention[]> {
+  //   return this.http.get<Convention[]>(this.url2 + categoryId + '/conventions').pipe(
+  //     catchError((err: any) => {
+  //       console.log(err);
+  //       return throwError(
+  //         () => new Error('indexForCategory: ' + err)
+  //       );
+  //     })
+  //   );
+  // }
   show(id: number): Observable<Convention> {
     return this.http.get<Convention>(this.url + '/' + id).pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError(() => new Error('TodoService.show ' + err));
+        return throwError(() => new Error('show ' + err));
       })
     );
   }
@@ -37,7 +50,7 @@ export class ConventionService {
       catchError((err: any) => {
         console.error(err);
         return throwError(
-          () => new Error('TodoService.create(): error creating todo: ' + err)
+          () => new Error(' error creating convention: ' + err)
         );
       })
     );
@@ -47,7 +60,7 @@ export class ConventionService {
     return this.http.put<Convention>(this.url + '/' + id, convention).pipe(
       catchError((err: any) => {
         console.error(err);
-        return throwError(() => new Error('TodoService.update():' + err));
+        return throwError(() => new Error('conventionService.update():' + err));
       })
     );
   }
