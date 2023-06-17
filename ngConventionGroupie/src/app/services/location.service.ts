@@ -3,16 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { Location } from 'src/app/models/location';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
-  url: string = environment.baseUrl;
+  url: string = environment.baseUrl + 'api/conventions/'
+  url2: string = environment.baseUrl + 'api/locations/'
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
   index(): Observable<Location[]> {
-    return this.http.get<Location[]>(this.url + '?sorted=true').pipe(
+    return this.http.get<Location[]>(this.url).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
@@ -21,21 +23,24 @@ export class LocationService {
       })
     );
   }
-  show(id: number): Observable<Location> {
-    return this.http.get<Location>(this.url + '/' + id).pipe(
+
+  indexForConvention(convId: number): Observable<Location[]> {
+    return this.http.get<Location[]>(this.url + convId + '/locations').pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError(() => new Error('TodoService.show ' + err));
+        return throwError(
+          () => new Error('indexForConvention: ' + err)
+        );
       })
     );
   }
 
-  create(location: Location): Observable<Location> {
-    return this.http.post<Location>(this.url, location).pipe(
+  create(convId: number, location: Location): Observable<Location> {
+    return this.http.post<Location>(this.url2 + convId + '/loactions', location).pipe(
       catchError((err: any) => {
         console.error(err);
         return throwError(
-          () => new Error('TodoService.create(): error creating todo: ' + err)
+          () => new Error('location: ' + err)
         );
       })
     );
@@ -45,7 +50,7 @@ export class LocationService {
     return this.http.put<Location>(this.url + '/' + id, location).pipe(
       catchError((err: any) => {
         console.error(err);
-        return throwError(() => new Error('TodoService.update():' + err));
+        return throwError(() => new Error('update' + err));
       })
     );
   }
@@ -54,7 +59,7 @@ export class LocationService {
     return this.http.delete<void>(this.url + '/' + id).pipe(
       catchError((err: any) => {
         console.error(err);
-        return throwError(() => new Error('TodoService.delete():' + err));
+        return throwError(() => new Error('delete' + err));
       })
     );
   }

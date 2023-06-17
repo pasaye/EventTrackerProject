@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!selected">
   <table class="table table-striped-columns table-hover">
     <thead>
       <tr>
@@ -14,12 +14,25 @@
         <td>{{conv.description}}</td>
         <td>{{conv.date}}</td>
         <td>{{conv.time}}</td>
-        <td></td>
+        <td><button (click)="displayConvention(conv)">Explore</button></td>
       </tr>
     </tbody>
   </table>
 </div>
-<div>
+<div *ngIf="selected">
+  <h1>{{selected.name}}</h1>
+  <p>{{selected.description}}</p>
+  <small>{{selected.date}}</small>
+  <br>
+  <small>{{selected.time}}</small>
+  <!-- <h4 *ngFor="let l of selected.locations">{{}}</h4> -->
+  <br>
+  <button (click)="selected=null">Back</button>
+  <button>Edit</button>
+  <button [routerLink]="['/conventions/'+ selected.id]">Show All Location</button>
+  <button [routerLink]="['/convention/' + selected.id]">Show All Images</button>
+</div>
+<div *ngIf="!selected">
   <input class="form-control" type="text" name="name" [(ngModel)]="newConvention.name"
     placeholder="Add Your Convention" />
   <input class="form-control" type="text" name="description" [(ngModel)]="newConvention.description"

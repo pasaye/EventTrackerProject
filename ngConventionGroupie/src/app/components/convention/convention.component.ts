@@ -1,7 +1,7 @@
 import { ConventionService } from './../../services/convention.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from 'src/app/models/category';
+//import { Category } from 'src/app/models/category';
 import { Convention } from 'src/app/models/convention';
 
 @Component({
@@ -47,6 +47,10 @@ export class ConventionComponent implements OnInit {
 
   }
 
+  displayConvention(convention: Convention) {
+    this.selected = convention;
+  }
+
   // loadCategoryConventions(categoryId: number) {
   //   this.conventionService.indexForCategory(categoryId).subscribe({
   //     next: (conventionListByCategory) => {
@@ -64,6 +68,19 @@ export class ConventionComponent implements OnInit {
       next: (convention) => {
         this.selected = convention;
         this.reload();
+      },
+      error: (error) => {
+        console.error('Error' + error);
+      },
+    });
+  }
+
+  updateConvention(id: number, editConvention: Convention) {
+    this.conventionService.update(id, editConvention).subscribe({
+      next: (category) => {
+        this.reload();
+        this.editConvention = null;
+        this.selected = null;
       },
       error: (error) => {
         console.error('Error' + error);

@@ -10,7 +10,9 @@ import { environment } from 'src/environments/environment.development';
 })
 export class ImageService {
 
-  url: string = environment.baseUrl;
+  url: string = environment.baseUrl + 'api/conventions/'
+  url2: string = environment.baseUrl + 'api/images/'
+
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
   index(): Observable<Image[]> {
@@ -23,42 +25,40 @@ export class ImageService {
       })
     );
   }
-  show(id: number): Observable<Image> {
-    return this.http.get<Image>(this.url + '/' + id).pipe(
+  indexForConvention(convId: number): Observable<Image[]> {
+    return this.http.get<Image[]>(this.url2 + convId + '/conventions').pipe(
       catchError((err: any) => {
         console.log(err);
-        return throwError(() => new Error('TodoService.show ' + err));
-      })
-    );
-  }
-
-  create(image: Image): Observable<Image> {
-    return this.http.post<Image>(this.url, image).pipe(
-      catchError((err: any) => {
-        console.error(err);
         return throwError(
-          () => new Error('TodoService.create(): error creating todo: ' + err)
+          () => new Error('indexForConvention: ' + err)
         );
       })
     );
   }
 
-  update(id: number, image: Image): Observable<Image> {
-    return this.http.put<Image>(this.url + '/' + id, image).pipe(
+  create(convId: number, image: Image): Observable<Image> {
+    return this.http.post<Image>(this.url2 + convId + '/conventions', image).pipe(
       catchError((err: any) => {
         console.error(err);
-        return throwError(() => new Error('TodoService.update():' + err));
+        return throwError(
+          () => new Error('creating image: ' + err)
+        );
       })
     );
   }
+
+
+
 
   destory(id: number): Observable<void> {
     return this.http.delete<void>(this.url + '/' + id).pipe(
       catchError((err: any) => {
         console.error(err);
-        return throwError(() => new Error('TodoService.delete():' + err));
+        return throwError(() => new Error('delete' + err));
       })
     );
   }
+
+
 }
 

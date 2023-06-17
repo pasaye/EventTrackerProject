@@ -1,1 +1,14 @@
-<p>image works!</p>
+<div class="name">
+  <ul>
+    <li *ngFor="let image of images"> <img src="{{image.imageUrl}}" alt=""></li>
+  </ul>
+
+</div>
+
+<div *ngIf="!selected">
+  <input class="form-control" type="text" name="name" [(ngModel)]="newImage.name" placeholder="Name" />
+  <input class="form-control" type="text" name="description" [(ngModel)]="newImage.imageUrl" placeholder="Image URL" />
+  <div class="d-grid gap-2">
+    <input class="btn btn-primary" type="submit" name="submit" value="Add Image" (click)="addImage(newImage)" />
+  </div>
+</div>

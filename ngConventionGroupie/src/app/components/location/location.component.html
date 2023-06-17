@@ -1,1 +1,18 @@
-<p>location works!</p>
+<div class="name">
+  <ul *ngFor="let l of locations">
+    <li> {{l.state}}</li>
+    <li> {{l.city}}</li>
+    <li> {{l.address}}</li>
+  </ul>
+
+</div>
+
+<div *ngIf="!selected">
+  <input class="form-control" type="text" name="state" [(ngModel)]="newLocation.state" placeholder="State" />
+  <input class="form-control" type="text" name="city" [(ngModel)]="newLocation.city" placeholder="City" />
+  <input class="form-control" type="text" name="address" [(ngModel)]="newLocation.address" placeholder="Address" />
+  <div class="d-grid gap-2">
+    <input class="btn btn-primary" type="submit" name="submit" value="Add Location"
+      (click)="addLocation(newLocation)" />
+  </div>
+</div>

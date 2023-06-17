@@ -12,6 +12,7 @@ import { LocationComponent } from './components/location/location.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FilterByIdPipe } from './pipes/filter-by-id.pipe';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FilterByIdPipe } from './pipes/filter-by-id.pipe';
     LocationComponent,
     NavBarComponent,
     NotFoundComponent,
-    FilterByIdPipe
+    FilterByIdPipe,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

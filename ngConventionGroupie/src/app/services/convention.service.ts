@@ -11,8 +11,9 @@ import { environment } from 'src/environments/environment.development';
 export class ConventionService {
 
   url: string = environment.baseUrl + 'api/conventions'
+  // url2: string = environment.baseUrl + 'api/categories'
+
   // url2: string = environment.baseUrl + 'api/categories/'
-  // url3: string = environment.baseUrl + 'api/categories'
 
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
