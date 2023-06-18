@@ -48,10 +48,11 @@ export class LocationComponent implements OnInit {
   addLocation(newLocation: Location) {
     const conventionId = this.getConventionIdFromParams();
     if (conventionId) {
-      this.locations.push(newLocation);
+
       this.locationService.create(conventionId, newLocation).subscribe({
         next: (location) => {
           this.selected = location;
+          this.loadLocationsForConventions(conventionId);
         },
         error: (error) => {
           console.error('Error' + error);

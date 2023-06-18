@@ -88,6 +88,17 @@ export class ConventionComponent implements OnInit {
     });
   }
 
+  deleteConvention(id: number) {
+    this.conventionService.destory(id).subscribe({
+      next: () => {
+        this.reload();
+      },
+      error: (error) => {
+        console.error('Error' + error);
+      }
+    })
+
+  }
 }
 
 

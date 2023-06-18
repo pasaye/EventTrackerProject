@@ -36,7 +36,7 @@ export class LocationService {
   }
 
   create(convId: number, location: Location): Observable<Location> {
-    return this.http.post<Location>(this.url2 + convId + '/loactions', location).pipe(
+    return this.http.post<Location>(this.url + convId + '/locations', location,).pipe(
       catchError((err: any) => {
         console.error(err);
         return throwError(

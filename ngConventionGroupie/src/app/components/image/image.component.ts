@@ -74,7 +74,7 @@ export class ImageComponent implements OnInit {
     return null;
   }
 
-  deleteTodo(id: number) {
+  deleteImage(id: number) {
     this.imageService.destory(id).subscribe({
       next: () => {
 

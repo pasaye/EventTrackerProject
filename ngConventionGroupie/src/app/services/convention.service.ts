@@ -66,13 +66,13 @@ export class ConventionService {
     );
   }
 
-  // destory(id: number): Observable<void> {
-  //   return this.http.delete<void>(this.url + '/' + id).pipe(
-  //     catchError((err: any) => {
-  //       console.error(err);
-  //       return throwError(() => new Error('TodoService.delete():' + err));
-  //     })
-  //   );
-  // }
+  destory(id: number): Observable<void> {
+    return this.http.delete<void>(this.url + '/' + id).pipe(
+      catchError((err: any) => {
+        console.error(err);
+        return throwError(() => new Error('TodoService.delete():' + err));
+      })
+    );
+  }
 }
 

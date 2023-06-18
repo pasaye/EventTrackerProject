@@ -1,5 +1,6 @@
 import { Category } from "./category";
 import { Image } from '../models/image';
+import { Location } from 'src/app/models/location'
 
 export class Convention {
   id: number;

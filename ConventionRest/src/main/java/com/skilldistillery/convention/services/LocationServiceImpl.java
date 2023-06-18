@@ -1,5 +1,6 @@
 package com.skilldistillery.convention.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,10 @@ public class LocationServiceImpl implements LocationService {
 	@Override
 	public Location create(int conventionId, Location location) {
 		Convention conv = convRepo.findById(conventionId);
+	
 		if(locatRepo.existsById(conventionId)) {
+			conv.addLocation(location);
+			
 			return locatRepo.saveAndFlush(location);
 			
 		}

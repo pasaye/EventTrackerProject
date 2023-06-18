@@ -60,9 +60,10 @@ public class ConventionController {
 			res.setStatus(400);
 			conv = null;
 		}
-		System.out.println("**************" + conv);
 		return conv;
 	}
+	
+	
 	
 	
 //	@PostMapping("conventions/{id}/categories")

@@ -54,9 +54,10 @@ public class LocationController {
 			return service.findByConventions_id(convId);
 	}
 	
-	@PostMapping("locations/{id}/conventions")
+	@PostMapping("conventions/{id}/locations")
 	public Location createLocation(@RequestBody Location location, HttpServletResponse res, @PathVariable int id) {
 		try {
+			System.out.println(location + "***************");
 			location = service.create(id, location);
 			res.setStatus(201);
 		} catch (Exception e) {
